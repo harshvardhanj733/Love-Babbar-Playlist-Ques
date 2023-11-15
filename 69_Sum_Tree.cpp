@@ -96,32 +96,26 @@ class Solution
 {
     public:
     
-    pair<bool, int> check(Node* root){
-        pair<bool, int> p;
+    pair<int, bool> solve(Node* root){
         if(root == NULL){
-            p.first = true;
-            p.second = 0;
-            return p;
+            return {0, true};
         }
         if(root->left == NULL && root->right == NULL){
-            p.first = true;
-            p.second = root->data;
-            return p;
+            return {root->data, true};
         }
         
-        pair<bool, int> left = check(root->left);
-        pair<bool, int> right = check(root->right);
+        pair<int, bool> left = solve(root->left);
+        pair<int, bool> right = solve(root->right);
         
-        p.first = left.first && right.first && left.second + right.second == root->data;
-        p.second = left.second + right.second + root->data;
-        
-        return p;
+        return {left.first + right.first + root->data, left.first + right.first
+            == root->data && left.second && right.second};
     }
     
     bool isSumTree(Node* root)
     {
          // Your code here
-         return check(root).first;
+         pair<int, bool> p = solve(root);
+         return p.second;
     }
 };
 
@@ -143,3 +137,6 @@ int main()
     return 1;
 }
 // } Driver Code Ends
+
+//TC: O(n);
+//SC: O(n);
