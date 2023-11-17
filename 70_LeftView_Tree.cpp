@@ -156,3 +156,7 @@ vector<int> leftView(Node *root)
    
    return res;
 }
+
+
+//TC: O(n);
+//SC: O(n);
